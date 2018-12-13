@@ -1,0 +1,42 @@
+{
+    "name": "Veranstaltung",
+    "fields": [
+        {
+            "fieldName": "archivierungsDatum",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "erstellungsDatum",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "freigegeben",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "grusswort",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "bild",
+            "otherEntityName": "bild",
+            "otherEntityRelationshipName": "veranstaltung"
+        }
+    ],
+    "changelogDate": "20181213003038",
+    "entityTableName": "veranstaltung",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

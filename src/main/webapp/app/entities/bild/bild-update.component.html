@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-bild-heading">Create or edit a Bild</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!bild.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="bild.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_invisible">Invisible</label>
+                    <input type="checkbox" class="form-control" name="invisible" id="field_invisible"
+                        [(ngModel)]="bild.invisible" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                        [(ngModel)]="bild.title" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_thumbUrl">Thumb Url</label>
+                    <input type="text" class="form-control" name="thumbUrl" id="field_thumbUrl"
+                        [(ngModel)]="bild.thumbUrl" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_url">Url</label>
+                    <input type="text" class="form-control" name="url" id="field_url"
+                        [(ngModel)]="bild.url" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_veranstaltung">Veranstaltung</label>
+                    <select class="form-control" id="field_veranstaltung" name="veranstaltung" [(ngModel)]="bild.veranstaltung" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="veranstaltungOption.id === bild.veranstaltung?.id ? bild.veranstaltung : veranstaltungOption" *ngFor="let veranstaltungOption of veranstaltungs; trackBy: trackVeranstaltungById">{{veranstaltungOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

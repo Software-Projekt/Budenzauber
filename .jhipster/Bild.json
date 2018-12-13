@@ -1,0 +1,39 @@
+{
+    "name": "Bild",
+    "fields": [
+        {
+            "fieldName": "invisible",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "thumbUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "url",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "veranstaltung",
+            "otherEntityName": "veranstaltung",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181213003039",
+    "javadoc": "not an ignored comment",
+    "entityTableName": "bild",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

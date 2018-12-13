@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bild">
+            <h2><span>Bild</span> {{bild.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Invisible</span></dt>
+                <dd>
+                    <span>{{bild.invisible}}</span>
+                </dd>
+                <dt><span>Title</span></dt>
+                <dd>
+                    <span>{{bild.title}}</span>
+                </dd>
+                <dt><span>Thumb Url</span></dt>
+                <dd>
+                    <span>{{bild.thumbUrl}}</span>
+                </dd>
+                <dt><span>Url</span></dt>
+                <dd>
+                    <span>{{bild.url}}</span>
+                </dd>
+                <dt><span>Veranstaltung</span></dt>
+                <dd>
+                    <div *ngIf="bild.veranstaltung">
+                        <a [routerLink]="['/veranstaltung', bild.veranstaltung?.id, 'view']">{{bild.veranstaltung?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bild', bild.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
