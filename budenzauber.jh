@@ -1,0 +1,40 @@
+
+entity Veranstaltung {
+	archivierungsDatum Instant,
+    erstellungsDatum Instant,
+    freigegeben Boolean,
+    grusswort String,
+    id Long,
+    name String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Bild {
+	id Long,
+    invisible Boolean,
+    title String,
+    thumbUrl String,
+    url String
+}
+
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Veranstaltung{bild} to Bild
+}
+
+
+// Set pagination options
+paginate Bild with infinite-scroll
+paginate Veranstaltung with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
