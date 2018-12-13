@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "gitCompany": "",
+    "baseName": "Budenzauber",
+    "packageName": "main",
+    "packageFolder": "main",
+    "serverPort": 8080,
+    "serviceDiscoveryType": false,
+    "authenticationType": "jwt",
+    "uaaBaseName": "../uaa",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "enableSwaggerCodegen": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "enableTranslation": false,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "clientFramework": "angularX",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "5.7.0",
+    "jwtSecretKey": "MGRjOTNhZTFiYTZlNTczMWJhYmE2ZGUwZDMwZDhmMTI2ZTJmNjFlYzBiOWE0Yjk3ZDZlNWIyYTI5ZTBiMmQ2ZWIxNDc3MWI4NTYyNWFlZmNmZjY3NzAwZWUyY2QyOGU3YTc4M2RlOGY3Njg2NmZmZDY1MDUyN2I3YTAzNzRkMjg=",
+    "otherModules": []
+  },
+  "git-provider": "GitHub",
+  "git-company": "matheins",
+  "repository-name": "Budenzauber"
+}
