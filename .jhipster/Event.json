@@ -1,0 +1,46 @@
+{
+    "name": "Event",
+    "fields": [
+        {
+            "fieldName": "archivierungsDatum",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "erstellungsDatum",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "freigegeben",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "grusswort",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20190110012649",
+    "entityTableName": "event",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -6,6 +6,7 @@ import { AccountService, User, UserService } from 'app/core';
 import { UserMgmtComponent } from './user-management.component';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserMgmtUpdateComponent } from './user-management-update.component';
+import { UserMgmtCreateUserComponent } from './user-management-createUser.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserResolve implements CanActivate {
@@ -54,6 +55,13 @@ export const userMgmtRoute: Routes = [
     {
         path: 'user-management/new',
         component: UserMgmtUpdateComponent,
+        resolve: {
+            user: UserMgmtResolve
+        }
+    },
+    {
+        path: 'user-management/newUser',
+        component: UserMgmtCreateUserComponent,
         resolve: {
             user: UserMgmtResolve
         }

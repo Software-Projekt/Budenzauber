@@ -11,6 +11,7 @@ import main.security.SecurityUtils;
 import main.service.dto.UserDTO;
 import main.service.util.RandomUtil;
 import main.web.rest.errors.*;
+import main.web.rest.vm.ManagedUserVM;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,7 +128,8 @@ public class UserService {
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
-
+    
+   
     private boolean removeNonActivatedUser(User existingUser){
         if (existingUser.getActivated()) {
              return false;
@@ -138,20 +140,24 @@ public class UserService {
         return true;
     }
 
-    public User createUser(UserDTO userDTO) {
+    public User createUser(ManagedUserVM userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail().toLowerCase());
+        if(userDTO.getEmail() == null) {
+        	user.setEmail(null);
+        }else {
+        	user.setEmail(userDTO.getEmail().toLowerCase());
+        }
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
+
+        
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
@@ -163,11 +169,53 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        if (userDTO.getPassword() != null) {
+        	String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+        	user.setPassword(encryptedPassword);
+        }else {
+        	String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+            user.setPassword(encryptedPassword);
+        }
         userRepository.save(user);
         this.clearUserCaches(user);
-        log.debug("Created Information for User: {}", user);
+        log.debug("Created Information for Veranstalter: {}", user);
         return user;
     }
+    
+//    public User createUser(UserDTO userDTO) {
+//        User user = new User();
+//        user.setLogin(userDTO.getLogin().toLowerCase());
+//        user.setFirstName(userDTO.getFirstName());
+//        user.setLastName(userDTO.getLastName());
+//        user.setEmail(userDTO.getEmail().toLowerCase());
+//        user.setImageUrl(userDTO.getImageUrl());
+//        if (userDTO.getLangKey() == null) {
+//            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+//        } else {
+//            user.setLangKey(userDTO.getLangKey());
+//        }
+//        String encryptedPassword = passwordEncoder.encode(ManagedUserVM.getPassword());
+////        user.setPassword(encryptedPassword);
+////        user.setResetKey(RandomUtil.generateResetKey());
+////        user.setResetDate(Instant.now());
+//        
+//        user.setPassword(encryptedPassword);
+//        user.setActivated(true);
+//        if (userDTO.getAuthorities() != null) {
+//            Set<Authority> authorities = userDTO.getAuthorities().stream()
+//                .map(authorityRepository::findById)
+//                .filter(Optional::isPresent)
+//                .map(Optional::get)
+//                .collect(Collectors.toSet());
+//            user.setAuthorities(authorities);
+//        }
+//        // new user gets registration key
+//        user.setActivationKey(RandomUtil.generateActivationKey());
+//        userRepository.save(user);
+//        this.clearUserCaches(user);
+//        log.debug("Created Information for User: {}", user);
+//        return user;
+//    }
 
     /**
      * Update basic information (first name, last name, email, language) for the current user.
@@ -311,6 +359,6 @@ public class UserService {
 
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
-        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+        //Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }
 }

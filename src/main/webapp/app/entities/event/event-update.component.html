@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-event-heading" jhiTranslate="budenzauberApp.event.home.createOrEditLabel">Create or edit a Event</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!event.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="event.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.archivierungsDatum" for="field_archivierungsDatum">Archivierungs Datum</label>
+                    <div class="d-flex">
+                        <input id="field_archivierungsDatum" type="datetime-local" class="form-control" name="archivierungsDatum" [(ngModel)]="archivierungsDatum"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.erstellungsDatum" for="field_erstellungsDatum">Erstellungs Datum</label>
+                    <div class="d-flex">
+                        <input id="field_erstellungsDatum" type="datetime-local" class="form-control" name="erstellungsDatum" [(ngModel)]="erstellungsDatum"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.freigegeben" for="field_freigegeben">Freigegeben</label>
+                    <input type="checkbox" class="form-control" name="freigegeben" id="field_freigegeben"
+                        [(ngModel)]="event.freigegeben" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.grusswort" for="field_grusswort">Grusswort</label>
+                    <textarea class="form-control" name="grusswort" id="field_grusswort"
+                        [(ngModel)]="event.grusswort" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="event.name" required/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="budenzauberApp.event.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="event.user" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id === event.user?.id ? event.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

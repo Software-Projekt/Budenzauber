@@ -1,0 +1,28 @@
+{
+    "budenzauberApp": {
+        "photo": {
+            "home": {
+                "title": "Photos",
+                "createLabel": "Photo erstellen",
+                "createOrEditLabel": "Photo erstellen oder bearbeiten"
+            },
+            "created": "Photo erstellt mit ID {{ param }}",
+            "updated": "Photo aktualisiert mit ID {{ param }}",
+            "deleted": "Photo gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Photo {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Photo"
+            },
+            "title": "Title",
+            "image": "Image",
+            "height": "Height",
+            "width": "Width",
+            "taken": "Taken",
+            "uploaded": "Uploaded",
+            "event": "Event",
+            "tag": "Tag"
+        }
+    }
+}

@@ -12,6 +12,8 @@ import main.web.rest.errors.EmailAlreadyUsedException;
 import main.web.rest.errors.LoginAlreadyUsedException;
 import main.web.rest.util.HeaderUtil;
 import main.web.rest.util.PaginationUtil;
+import main.web.rest.vm.ManagedUserVM;
+
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -74,7 +76,7 @@ public class UserResource {
     }
 
     /**
-     * POST  /users  : Creates a new user.
+     * POST  /users  : Creates a new Veranstalter or User.
      * <p>
      * Creates a new user if the login and email are not already used, and sends an
      * mail with an activation link.
@@ -87,25 +89,79 @@ public class UserResource {
      */
     @PostMapping("/users")
     @Timed
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
-        log.debug("REST request to save User : {}", userDTO);
+    @PreAuthorize("hasAnyRole('" + AuthoritiesConstants.ADMIN + "', '" + AuthoritiesConstants.VERANSTALTER + "')")
+    public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM userDTO) throws URISyntaxException {
+        log.debug("REST request to save Veranstalter : {}", userDTO);
+        System.out.println(userDTO.getAuthorities().toString());
 
-        if (userDTO.getId() != null) {
-            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
-            // Lowercase the user login before comparing with database
-        } else if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
-            throw new LoginAlreadyUsedException();
-        } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
-            throw new EmailAlreadyUsedException();
-        } else {
-            User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
-            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
-                .body(newUser);
+		if (userDTO.getAuthorities().toString().equals("[ROLE_USER]")) {
+			System.out.println("Simplen User anlegen");
+			if (userDTO.getId() != null) {
+				throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement",
+						"idexists");
+				// Lowercase the user login before comparing with database
+			} else if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
+				throw new LoginAlreadyUsedException();
+			} else {
+				User newUser = userService.createUser(userDTO);
+				return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+						.headers(HeaderUtil.createAlert("userManagement.created", newUser.getLogin())).body(newUser);
+			}
+
+		} else {
+			System.out.println("Admin oder Veranstalter anlegen");
+        
+	        if (userDTO.getId() != null) {
+	            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+	            // Lowercase the user login before comparing with database
+	        } else if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
+	            throw new LoginAlreadyUsedException();
+	        } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
+	            throw new EmailAlreadyUsedException();
+	        } else {
+	            User newUser = userService.createUser(userDTO);
+	            mailService.sendCreationEmail(newUser);
+	            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+	                .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
+	                .body(newUser);
+	        }
         }
     }
+    
+  
+    
+    /**
+     * POST  /users  : Creates a new Veranstalter.
+     * <p>
+     * Creates a new user if the login and email are not already used, and sends an
+     * mail with an activation link.
+     * The user needs to be activated on creation.
+     *
+     * @param userDTO the user to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @throws BadRequestAlertException 400 (Bad Request) if the login or email is already in use
+     */
+//    @PostMapping("/users")
+//    @Timed
+//    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.VERANSTALTER + "\")")
+//    public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
+//        log.debug("REST request to save Veranstalter : {}", userDTO);
+//
+//        if (userDTO.getId() != null) {
+//            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+//            // Lowercase the user login before comparing with database
+//        } else if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
+//            throw new LoginAlreadyUsedException();
+//        } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
+//            throw new EmailAlreadyUsedException();
+//        } else {
+//            User newUser = userService.createUser(userDTO);
+//            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+//                .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
+//                .body(newUser);
+//        }
+//    }
 
     /**
      * PUT /users : Updates an existing User.
@@ -133,6 +189,8 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(updatedUser,
             HeaderUtil.createAlert("userManagement.updated", userDTO.getLogin()));
     }
+    
+    
 
     /**
      * GET /users : get all users.
@@ -153,7 +211,7 @@ public class UserResource {
      */
     @GetMapping("/users/authorities")
     @Timed
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAnyRole('" + AuthoritiesConstants.ADMIN + "', '" + AuthoritiesConstants.VERANSTALTER + "')")
     public List<String> getAuthorities() {
         return userService.getAuthorities();
     }

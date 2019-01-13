@@ -1,0 +1,49 @@
+entity Event {
+	archivierungsDatum Instant,
+    erstellungsDatum Instant,
+    freigegeben Boolean,
+    grusswort TextBlob,
+    name String required
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Photo {
+	title String required,
+    image ImageBlob required,
+    height Integer,
+    width Integer,
+    taken Instant,
+    uploaded Instant
+}
+
+entity Tag {
+ 	name String required minlength(2)
+}
+
+
+
+
+// defining multiple OneToMany relationships with comments
+relationship ManyToOne {
+	 Photo{Event(title)} to Event,
+     Event {user(login)} to User
+}
+
+relationship ManyToMany {
+	Photo{tag(name)} to Tag{photo}
+}
+
+
+// Set pagination options
+paginate Photo, Tag with infinite-scroll
+paginate Event with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

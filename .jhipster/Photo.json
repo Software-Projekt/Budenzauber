@@ -1,0 +1,62 @@
+{
+    "name": "Photo",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "width",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "taken",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "uploaded",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "event",
+            "otherEntityName": "event",
+            "otherEntityField": "title"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "photo",
+            "relationshipName": "tag",
+            "otherEntityName": "tag",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190110012650",
+    "javadoc": "not an ignored comment",
+    "entityTableName": "photo",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -40,6 +40,11 @@ public class CacheConfiguration {
             cm.createCache(main.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(main.domain.PersistentToken.class.getName(), jcacheConfiguration);
             cm.createCache(main.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
+            cm.createCache(main.domain.Event.class.getName(), jcacheConfiguration);
+            cm.createCache(main.domain.Photo.class.getName(), jcacheConfiguration);
+            cm.createCache(main.domain.Photo.class.getName() + ".tags", jcacheConfiguration);
+            cm.createCache(main.domain.Tag.class.getName(), jcacheConfiguration);
+            cm.createCache(main.domain.Tag.class.getName() + ".photos", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="event">
+            <h2><span jhiTranslate="budenzauberApp.event.detail.title">Event</span> {{event.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="budenzauberApp.event.archivierungsDatum">Archivierungs Datum</span></dt>
+                <dd>
+                    <span>{{event.archivierungsDatum}}</span>
+                </dd>
+                <dt><span jhiTranslate="budenzauberApp.event.erstellungsDatum">Erstellungs Datum</span></dt>
+                <dd>
+                    <span>{{event.erstellungsDatum}}</span>
+                </dd>
+                <dt><span jhiTranslate="budenzauberApp.event.freigegeben">Freigegeben</span></dt>
+                <dd>
+                    <span>{{event.freigegeben}}</span>
+                </dd>
+                <dt><span jhiTranslate="budenzauberApp.event.grusswort">Grusswort</span></dt>
+                <dd>
+                    <span>{{event.grusswort}}</span>
+                </dd>
+                <dt><span jhiTranslate="budenzauberApp.event.name">Name</span></dt>
+                <dd>
+                    <span>{{event.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="budenzauberApp.event.user">User</span></dt>
+                <dd>
+                    {{event.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/event', event.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ export class UserService {
     constructor(private http: HttpClient) {}
 
     create(user: IUser): Observable<HttpResponse<IUser>> {
+        console.log(this.http.post<IUser>(this.resourceUrl, user, { observe: 'response' }));
         return this.http.post<IUser>(this.resourceUrl, user, { observe: 'response' });
     }
 
