@@ -14,7 +14,8 @@ USER jhipster
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-EXPOSE 8080
+ADD /keystore.p12 /keystore.p12
+EXPOSE 443
 
 ADD *.war app.war
 

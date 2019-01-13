@@ -37,7 +37,7 @@
                 <dt><span jhiTranslate="budenzauberApp.photo.event">Event</span></dt>
                 <dd>
                     <div *ngIf="photo.event">
-                        <a [routerLink]="['/event', photo.event?.id, 'view']">{{photo.event?.title}}</a>
+                        <a [routerLink]="['/event', photo.event?.id, 'view']">{{photo.event?.name}}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="budenzauberApp.photo.tag">Tag</span></dt>

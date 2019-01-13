@@ -8,7 +8,7 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:mariadb://budenzauber-mariadb:3306/budenzauber
             - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
         ports:
-            - 8080:8080
+            - 443:443
     budenzauber-mariadb:
         extends:
             file: mariadb.yml
