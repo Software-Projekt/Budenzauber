@@ -27,7 +27,7 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mariadb://131.173.88.206:3306/budenzauber?useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mariadb://localhost:3306/budenzauber?useLegacyDatetimeCode=false&serverTimezone=UTC
         username: root
         password:
         hikari:
@@ -134,7 +134,7 @@ jhipster:
     logging:
         logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
             enabled: false
-            host: 131.173.88.206
+            host: localhost
             port: 5000
             queue-size: 512
 
