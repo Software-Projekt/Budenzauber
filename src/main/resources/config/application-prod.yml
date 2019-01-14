@@ -121,8 +121,8 @@ jhipster:
             # security key (this key should be unique for your application, and kept secret)
             key: f21ccbeb84bd7107adfbbe8aa208f10614fb45f14aafbdc67d4e38bd4bab4592263f0b00fd4ba58d32d7ac2f2b1da59719e7
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: budenzauber@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        from: budenzauber2019@gmail.com
+        base-url: https://127.0.0.1:8080 # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx:
             enabled: true
