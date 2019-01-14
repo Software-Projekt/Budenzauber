@@ -61,8 +61,8 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: budenzauber2019@gmail.com
-        password: Budenzauber.2019
+        username: budenzaubergallery@gmail.com
+        password: Buden.2019Zauber
         protocol: smtp
         tls: true
         properties.mail.smtp:
