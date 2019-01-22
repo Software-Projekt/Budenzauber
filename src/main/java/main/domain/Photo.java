@@ -33,10 +33,6 @@ public class Photo implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-    
-    @Lob
-    @Column(name = "image", nullable = false)
-    private byte[] image;
 
     @Column(name = "image_content_type", nullable = false)
     private String imageContentType;
@@ -86,18 +82,6 @@ public class Photo implements Serializable {
         this.title = title;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public Photo image(byte[] image) {
-        this.image = image;
-        return this;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     public String getImageContentType() {
         return imageContentType;
@@ -228,7 +212,6 @@ public class Photo implements Serializable {
         return "Photo{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", height=" + getHeight() +
             ", width=" + getWidth() +

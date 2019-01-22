@@ -6,7 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2Webstorage } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
@@ -16,6 +16,8 @@ import { BudenzauberAppRoutingModule } from './app-routing.module';
 import { BudenzauberHomeModule } from './home/home.module';
 import { BudenzauberAccountModule } from './account/account.module';
 import { BudenzauberEntityModule } from './entities/entity.module';
+import { CustomMaterialModule } from 'app/material.module';
+
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
@@ -33,11 +35,13 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             defaultI18nLang: 'de'
         }),
         BudenzauberSharedModule.forRoot(),
+        HttpClientModule,
         BudenzauberCoreModule,
         BudenzauberHomeModule,
         BudenzauberAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
-        BudenzauberEntityModule
+        BudenzauberEntityModule,
+        CustomMaterialModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
     providers: [

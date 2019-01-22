@@ -7,6 +7,8 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'n
 import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core';
 
+import { IPhoto } from 'app/shared/model/photo.model';
+
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { EventService } from './event.service';
 

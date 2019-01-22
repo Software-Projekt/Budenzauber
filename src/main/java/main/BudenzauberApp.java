@@ -5,6 +5,7 @@ import main.config.DefaultProfileUtil;
 
 import io.github.jhipster.config.JHipsterConstants;
 
+import main.service.IStorageService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -31,6 +33,11 @@ public class BudenzauberApp {
     public BudenzauberApp(Environment env) {
         this.env = env;
     }
+
+    @Resource
+    IStorageService storageService;
+
+
 
     /**
      * Initializes budenzauber.
@@ -50,6 +57,7 @@ public class BudenzauberApp {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
+        this.storageService.init();
     }
 
     /**
@@ -63,6 +71,7 @@ public class BudenzauberApp {
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
     }
+
 
     private static void logApplicationStartup(Environment env) {
         String protocol = "http";
@@ -95,4 +104,5 @@ public class BudenzauberApp {
             contextPath,
             env.getActiveProfiles());
     }
+
 }

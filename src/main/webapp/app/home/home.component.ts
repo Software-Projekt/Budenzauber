@@ -3,6 +3,8 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService, AccountService, Account } from 'app/core';
+import { Observable } from 'rxjs';
+import { PhotoService } from 'app/entities/photo';
 
 @Component({
     selector: 'jhi-home',
@@ -13,10 +15,14 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
 
+    showFile = false;
+    fileUploads: Observable<string[]>;
+
     constructor(
         private accountService: AccountService,
         private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private photoService: PhotoService
     ) {}
 
     ngOnInit() {
