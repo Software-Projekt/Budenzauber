@@ -57,7 +57,7 @@ public class BudenzauberApp {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
-        this.storageService.init();
+        //this.storageService.init();
     }
 
     /**
