@@ -147,4 +147,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    file:
+        uploadDir: /home/jhipster/uploads

@@ -128,5 +128,6 @@ jhipster:
 # More documentation is available at:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
-
+application:
+    file:
+        uploadDir: ./src/main/webapp/content/images/uploads
