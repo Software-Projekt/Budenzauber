@@ -45,7 +45,7 @@ public class StorageService implements IStorageService {
 
     @Autowired
     public StorageService(ApplicationProperties fileStorageProperties) {
-        this.fileStorageLocation = Paths.get(fileStorageProperties.getFile().getUploadDir());
+        this.fileStorageLocation = Paths.get(fileStorageProperties.getFile().getUploadDir()).normalize().toAbsolutePath();
 
         //BUG: Overwrites /uploads
         /*if (Files.notExists(this.fileStorageLocation) && !Files.isDirectory(this.fileStorageLocation)) {
