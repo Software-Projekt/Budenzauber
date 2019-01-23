@@ -1,0 +1,185 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-1">
+        <createTable tableName="event">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="eventPK"/>
+            </column>
+            <column name="archivierungs_datum" type="BINARY(255)"/>
+            <column name="erstellungs_datum" type="BINARY(255)"/>
+            <column name="freigegeben" type="BOOLEAN"/>
+            <column name="grusswort" type="CLOB"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-2">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-3">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="BINARY(255)"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-4">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-5">
+        <createTable tableName="jhi_persistent_token">
+            <column name="series" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip_address" type="VARCHAR(39)"/>
+            <column name="token_date" type="BINARY(255)"/>
+            <column name="token_value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_agent" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-6">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="BINARY(255)"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="BINARY(255)"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(6)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reset_date" type="BINARY(255)"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-7">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-8">
+        <createTable tableName="photo">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photoPK"/>
+            </column>
+            <column name="height" type="INT"/>
+            <column name="image_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="taken" type="BINARY(255)"/>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uploaded" type="BINARY(255)"/>
+            <column name="width" type="INT"/>
+            <column name="event_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-9">
+        <createTable tableName="photo_tag">
+            <column name="photos_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tags_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-10">
+        <createTable tableName="tag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="tagPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-11">
+        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-12">
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-13">
+        <addPrimaryKey columnNames="photos_id, tags_id" tableName="photo_tag"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-14">
+        <addPrimaryKey columnNames="name" constraintName="jhi_authorityPK" tableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-15">
+        <addPrimaryKey columnNames="series" constraintName="jhi_persistent_tokenPK" tableName="jhi_persistent_token"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-16">
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-17">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-18">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-19">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-20">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-21">
+        <addForeignKeyConstraint baseColumnNames="tags_id" baseTableName="photo_tag" constraintName="FKbro3t9xmkhu9x2eu1k65vinqw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tag"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-22">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="photo" constraintName="FKdbadfit090kvl159gty4hl5so" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="event"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-23">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="event" constraintName="FKecgtiopnoa8s0d2q6pv7g13ij" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-24">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_persistent_token" constraintName="FKmogh0vmv89yg5kofe6n3t77ud" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MatyasHeins (generated)" id="1548207840501-25">
+        <addForeignKeyConstraint baseColumnNames="photos_id" baseTableName="photo_tag" constraintName="FKp9m6uy4cjprh7gx5og9vjolks" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="photo"/>
+    </changeSet>
+</databaseChangeLog>
