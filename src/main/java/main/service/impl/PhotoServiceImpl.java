@@ -54,6 +54,20 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     /**
+     * Get all photos for event.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Photo> findPhotosByEvent(Pageable pageable, long id) {
+        log.debug("Request to get all Photo by Event");
+        return photoRepository.findAllByEvent(pageable, id);
+    }
+
+
+    /**
      * Get all the Photo with eager load of many-to-many relationships.
      *
      * @return the list of entities

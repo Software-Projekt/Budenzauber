@@ -27,6 +27,8 @@ export class EventUpdateComponent implements OnInit {
 
     date: Date;
 
+    data: any;
+
     selectedFiles: FileList;
     progress: { percentage: number } = { percentage: 0 };
 
@@ -69,10 +71,11 @@ export class EventUpdateComponent implements OnInit {
         for (let j = 0; j < this.uploader.queue.length; j++) {
             const data = new FormData();
             const fileItem = this.uploader.queue[j]._file;
-            console.log(fileItem.name);
+
             data.append('file', fileItem);
             data.append('fileSeq', 'seq' + j);
             data.append('dataType', this.uploadForm.controls.type.value);
+
             this.photoService.upload(data, this.event.id).subscribe(event => {
                 if (event.type === HttpEventType.UploadProgress) {
                     this.progress.percentage = Math.round((100 * event.loaded) / event.total);
@@ -109,6 +112,12 @@ export class EventUpdateComponent implements OnInit {
     resetProgress() {
         this.progress.percentage = 0;
     }
+
+    // getAllImages() {
+    //     this.data = this.photoService.getFiles(this.event.id);
+    //     console.log(this.data);
+    //
+    // }
 
     selectFile(event) {
         this.selectedFiles = event.target.files;

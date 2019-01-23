@@ -31,12 +31,12 @@ export class TagUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ tag }) => {
             this.tag = tag;
         });
-        this.photoService.query().subscribe(
-            (res: HttpResponse<IPhoto[]>) => {
-                this.photos = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        // this.photoService.query().subscribe(
+        //     (res: HttpResponse<IPhoto[]>) => {
+        //         this.photos = res.body;
+        //     },
+        //     (res: HttpErrorResponse) => this.onError(res.message)
+        // );
     }
 
     previousState() {

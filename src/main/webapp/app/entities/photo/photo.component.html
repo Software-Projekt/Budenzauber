@@ -1,3 +1,4 @@
+<!--
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="budenzauberApp.photo.home.title">Photos</span>
@@ -71,5 +72,9 @@
             </tr>
             </tbody>
         </table>
+        <div *ngFor="let photo of photos">
+            <img [src]="path + eventdir + photo.title" />
+        </div>
     </div>
 </div>
+-->

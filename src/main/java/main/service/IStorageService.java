@@ -3,12 +3,12 @@ package main.service;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public interface IStorageService {
 
-    void store(MultipartFile file);
-
-    Resource loadFile(String filename);
 
     void deleteAll();
     void init();
@@ -19,6 +19,9 @@ public interface IStorageService {
     Resource loadFileAsResource(String fileName);
 
     void createFolder(String name);
+
+    public ArrayList<String> getAllImages(long eventId);
+    Resource loadFile(String filename, long eventId);
 
 
 

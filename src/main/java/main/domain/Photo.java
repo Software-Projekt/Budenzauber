@@ -33,10 +33,6 @@ public class Photo implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-
-    @Column(name = "image_content_type", nullable = false)
-    private String imageContentType;
-
     @Column(name = "height")
     private Integer height;
 
@@ -82,19 +78,6 @@ public class Photo implements Serializable {
         this.title = title;
     }
 
-
-    public String getImageContentType() {
-        return imageContentType;
-    }
-
-    public Photo imageContentType(String imageContentType) {
-        this.imageContentType = imageContentType;
-        return this;
-    }
-
-    public void setImageContentType(String imageContentType) {
-        this.imageContentType = imageContentType;
-    }
 
     public Integer getHeight() {
         return height;
@@ -212,7 +195,6 @@ public class Photo implements Serializable {
         return "Photo{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", imageContentType='" + getImageContentType() + "'" +
             ", height=" + getHeight() +
             ", width=" + getWidth() +
             ", taken='" + getTaken() + "'" +

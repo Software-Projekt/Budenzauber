@@ -27,51 +27,15 @@ export class PhotoService {
         return this.http.request(req);
     }
 
-    /*upload(photos: Set<File>): {[key: string]: Observable<number>} {
-            // resulting Map
-            const status = {};
-
-            photos.forEach(file => {
-                // multipart-form for every file
-                const formData: FormData = new FormData();
-                formData.append('file', file, file.name);
-
-                // create a http-post request and pass the form
-                // tell it to report the upload progress
-                const req = new HttpRequest('POST', this.resourceUrl + '/upload',
-                    formData, {
-                    reportProgress: true,
-                    responseType: 'text'
-                    });
-
-                // create a newprogress-subject for every file
-                const progress = new Subject<number>();
-
-                // send the http-request and subscribe for progress-updates
-                this.http.request(req).subscribe(event => {
-                    if (event.type === HttpEventType.UploadProgress) {
-                        // calculate the upload percentage
-                        const percentDone = Math.round(100 * event.loaded / event.total);
-
-                        // pass the percentage into progress-stream
-                        progress.next(percentDone);
-                        console.log(percentDone);
-                    } else if (event instanceof HttpResponse) {
-                        // Close the progress-stream if we get an answer from API
-                        // Upload complete
-                        progress.complete();
-
-                }
-                });
-
-            });
-            // return Map of progress.observables
-            return status;
-        }*/
-
-    getFiles(): Observable<any> {
-        return this.http.get(this.resourceUrl + '/getallfiles');
-    }
+    // getFiles(id: number) {
+    //     //const req = new HttpRequest('GET', this.resourceUrl + '/' + id);
+    //
+    //     return this.http.get(this.resourceUrl + '/' + id)
+    //         .map((response: Response) =>
+    //         {
+    //             return response.json();
+    //         });
+    // }
 
     create(photo: IPhoto): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(photo);
@@ -93,10 +57,10 @@ export class PhotoService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    query(req?: any): Observable<EntityArrayResponseType> {
+    query(id: number, req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<IPhoto[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<IPhoto[]>(`${this.resourceUrl}/event/${id}`, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 

@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 import main.config.ApplicationProperties;
 import main.config.Constants;
 import main.domain.Event;
+import main.domain.Photo;
 import main.service.EventService;
 import main.service.IStorageService;
+import main.service.PhotoService;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +35,17 @@ public class StorageService implements IStorageService {
 
     private final Path fileStorageLocation;
     private final Logger log = LoggerFactory.getLogger(StorageService.class);
+    Date date = new Date();
 
     @Autowired
     private EventService eventService;
 
+   @Autowired
+   private PhotoService photoService;
+
     @Autowired
     public StorageService(ApplicationProperties fileStorageProperties) {
-        this.fileStorageLocation = Paths.get(fileStorageProperties.getFile().getUploadDir())
-            .toAbsolutePath().normalize();
+        this.fileStorageLocation = Paths.get(fileStorageProperties.getFile().getUploadDir());
 
         //BUG: Overwrites /uploads
         /*if (Files.notExists(this.fileStorageLocation) && !Files.isDirectory(this.fileStorageLocation)) {
@@ -51,20 +58,22 @@ public class StorageService implements IStorageService {
     }
 
     public String storeFile(MultipartFile file, long eventId) {
+        Photo photo = new Photo();
+        photo.setTitle(file.getOriginalFilename());
+        photo.setUploaded(date.toInstant());
+        photo.setEvent(eventService.findEventbyId(eventId));
+        photoService.save(photo);
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String eventFolder = "/" + eventService.findEventbyId(eventId).getName()
             + "-"
             + eventService.findEventbyId(eventId).getErstellungsDatum().toString().substring(0, 10) + "/";
-        System.out.println(eventFolder);
-        //String directoryName = StringUtils.cleanPath(eventService.findOne(eventId).get().getName());
 
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-
 
             // Copy file to the target location (Replacing existing file with the same name)
             File path = new File(this.fileStorageLocation.toString() + eventFolder + fileName);
@@ -93,21 +102,38 @@ public class StorageService implements IStorageService {
         }
     }
 
+    public ArrayList<String> getAllImages(long eventId) {
+        String eventFolder = "/" + eventService.findEventbyId(eventId).getName()
+            + "-"
+            + eventService.findEventbyId(eventId).getErstellungsDatum().toString().substring(0, 10) + "/";
+        File directory = new File(this.fileStorageLocation.toString() + eventFolder);
+        ArrayList<String> resultList = new ArrayList<String>(256);
+        File[] f = directory.listFiles();
 
-    ///////////////////////////
-
-    public void store(MultipartFile file) {
-        try {
-            Files.copy(file.getInputStream(), this.fileStorageLocation.resolve(file.getOriginalFilename()));
-        } catch (Exception e) {
-            throw new RuntimeException("FAIL!");
+        for (File file : f) {
+            if (file != null && file.getName().toLowerCase().endsWith(".jpg") && !file.getName().startsWith("tn_")) {
+                try {
+                    resultList.add(file.getCanonicalPath());
+                }catch(IOException e){
+                    new RuntimeException("getAllImages fehlgeschlagen");
+                }
+            }
         }
+        if (resultList.size() > 0)
+            return resultList;
+        else
+            return null;
     }
 
 
-    public Resource loadFile(String filename) {
+
+
+    public Resource loadFile(String filename, long eventId) {
+        String eventFolder = "/" + eventService.findEventbyId(eventId).getName()
+            + "-"
+            + eventService.findEventbyId(eventId).getErstellungsDatum().toString().substring(0, 10) + "/";
         try {
-            Path file = fileStorageLocation.resolve(filename);
+            Path file = fileStorageLocation.resolve(eventFolder + filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
@@ -121,13 +147,15 @@ public class StorageService implements IStorageService {
 
     public void createFolder(String name){
         String dirName = StringUtils.cleanPath(fileStorageLocation+ "/" + name);
+        Path path = Paths.get(dirName);
         log.debug("Directory Name: " + name);
-        try {
-            Path path = Paths.get(dirName);
-            log.debug(path.toString());
-            Files.createDirectory(path);
-        } catch (IOException e){
-            throw new RuntimeException("Could not create Directory");
+
+        if(!Files.isDirectory(path) && Files.notExists(path)) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not create Directory");
+            }
         }
     }
 

@@ -117,4 +117,4 @@ jhipster:
 
 application:
     file:
-        uploadDir: ./uploads
+        uploadDir: ./src/main/webapp/content/images/uploads

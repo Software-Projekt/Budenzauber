@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="budenzauberApp.event.home.title">Events</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/event/new']">
+        <button *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_VERANSTALTER']" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/event/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="budenzauberApp.event.home.createLabel">
             Create new Event
@@ -35,7 +35,7 @@
                 <td>
                     {{event.user?.login}}
                 </td>
-                <td class="text-right">
+                <td *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_VERANSTALTER']" class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['/event', event.id, 'view' ]"

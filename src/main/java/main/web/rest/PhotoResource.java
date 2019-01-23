@@ -1,9 +1,12 @@
 package main.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import main.domain.Event;
 import main.domain.Photo;
+import main.service.EventService;
 import main.service.IStorageService;
 import main.service.PhotoService;
+import main.service.storage.StorageService;
 import main.service.storage.UploadFileResponse;
 import main.web.rest.errors.BadRequestAlertException;
 import main.web.rest.util.HeaderUtil;
@@ -15,20 +18,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.net.URISyntaxException;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -47,8 +51,10 @@ public class PhotoResource {
 
     @Autowired
     IStorageService storageService;
-
+    Date date = new Date();
     PhotoService photoService;
+    EventService eventService;
+    List<String> files = new ArrayList<String>();
 
 
     /**
@@ -58,7 +64,6 @@ public class PhotoResource {
     @PostMapping("/photos/{id}")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("id") long id) {
         String fileName = storageService.storeFile(file, id);
-
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/downloadFile/")
             .path(fileName)
@@ -66,8 +71,21 @@ public class PhotoResource {
 
         return new UploadFileResponse(fileName, fileDownloadUri,
             file.getContentType(), file.getSize());
+    }
 
-
+    /**
+          * GET  /photos : get all the photos.
+          *
+          * @param pageable the pagination information
+          * @return the ResponseEntity with status 200 (OK) and the list of photos in body
+          */
+    @GetMapping("/photos/event/{id}")
+    @Timed
+    public ResponseEntity<List<Photo>> getAllPhotosByEvent(Pageable pageable,  @PathVariable long id) {
+        logger.debug("REST request to get a page of Photos");
+        Page<Photo> page = photoService.findPhotosByEvent(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/photos?eagerload=%b");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
 
@@ -94,6 +112,7 @@ public class PhotoResource {
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
             .body(resource);
     }
+
 
 //    @GetMapping("/photos/getallfiles")
 //    public ResponseEntity<List<String>> getListFiles(Model model) {

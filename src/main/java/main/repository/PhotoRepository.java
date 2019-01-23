@@ -27,4 +27,7 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
     @Query("select photo from Photo photo left join fetch photo.tags where photo.id =:id")
     Optional<Photo> findOneWithEagerRelationships(@Param("id") Long id);
 
+    @Query("select photo from Photo photo where photo.event =:event")
+    Page<Photo> findAllByEvent(Pageable pageable, @Param("event") Long event);
+
 }

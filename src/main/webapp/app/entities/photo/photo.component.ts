@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
@@ -14,6 +14,11 @@ import { PhotoService } from './photo.service';
     templateUrl: './photo.component.html'
 })
 export class PhotoComponent implements OnInit, OnDestroy {
+    @Input()
+    event = 1;
+    eventdir = '/test-2019-01-22/';
+
+    path = '/content/images/uploads';
     photos: IPhoto[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -45,7 +50,7 @@ export class PhotoComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.photoService
-            .query({
+            .query(this.event, {
                 page: this.page,
                 size: this.itemsPerPage,
                 sort: this.sort()
